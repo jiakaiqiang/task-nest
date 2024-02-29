@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { LoginService } from './login.service';
 import { CreateLoginDto } from './dto/create-login.dto';
 import { UpdateLoginDto } from './dto/update-login.dto';
-
+import { BusinessException } from 'src/common/business.exception';
 @Controller('login')
 export class LoginController {
   constructor(private readonly loginService: LoginService) {}
@@ -16,7 +16,21 @@ export class LoginController {
   findAll() {
     return this.loginService.findAll();
   }
+ 
 
+  
+
+  @Get('findBusinessError')
+
+  findBusinessError() {
+    const a: any = {}
+    try {
+      console.log(a.b.c)
+    } catch (error) {
+      throw new BusinessException('你这个参数错了')
+    }
+    return this.loginService.findAll();
+  }
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.loginService.findOne(+id);

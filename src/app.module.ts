@@ -9,11 +9,20 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 ///中间见进行依赖注入
 import { middleware} from './middle/middle'
 import { ArtcileModule } from './artcile/artcile.module';
-import { RedisCacheModule } from '../cache/redis-cache/redis-cache.module';
+import {CacheModule} from '@nestjs/cache-manager'
+import{redisStore} from 'cache-manager-redis-yet';
 
 @Module({
   imports: [
-    RedisCacheModule,
+    CacheModule.register({
+      isGlobal: true,
+      store: redisStore,
+       host: '127.0.0.1',
+       port: 6379,
+       db: 0, //目标库,
+       auth_pass:  123456 // 密码,没有可以不写
+
+}),
     TypeOrmModule.forRoot({
       type: "mysql",
       connectorPackage: "mysql2",

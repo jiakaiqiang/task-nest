@@ -12,12 +12,12 @@ export class LoginService {
 
   constructor(@InjectRepository(Login)
               private loginRepository: Repository<Login>,  //这种简写可以将loginRepositoy 声明和初始化同时进行
-             private readonly redisCacheService: RedisCacheService
+             // private readonly redisCacheService: RedisCacheService
               ) {
   }
 
   create(createLoginDto: CreateLoginDto) {
-   
+    //this.redisCacheService.cacheSet('FWFWE', 'WEWEW', 60*60*24*7)
     return this.loginRepository.save(createLoginDto);
   }
 

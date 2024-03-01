@@ -17,10 +17,12 @@ import{redisStore} from 'cache-manager-redis-yet';
     CacheModule.register({
       isGlobal: true,
       store: redisStore,
-       host: '127.0.0.1',
-       port: 6379,
+      socket:{
+        host: '127.0.0.1',
+        port: 6379,
+      },
        db: 0, //目标库,
-       auth_pass:  123456 // 密码,没有可以不写
+      
 
 }),
     TypeOrmModule.forRoot({

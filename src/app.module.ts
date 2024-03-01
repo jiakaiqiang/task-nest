@@ -1,4 +1,5 @@
 import { Module,NestModule ,MiddlewareConsumer  } from '@nestjs/common';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LoginModule } from './login/login.module';
@@ -8,9 +9,11 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 ///中间见进行依赖注入
 import { middleware} from './middle/middle'
 import { ArtcileModule } from './artcile/artcile.module';
+import { RedisCacheModule } from '../cache/redis-cache/redis-cache.module';
 
 @Module({
   imports: [
+    RedisCacheModule,
     TypeOrmModule.forRoot({
       type: "mysql",
       connectorPackage: "mysql2",
@@ -28,7 +31,7 @@ import { ArtcileModule } from './artcile/artcile.module';
     }),
 
     LoginModule,
-
+    
     ArtcileModule],
   controllers: [AppController],
   providers: [AppService],

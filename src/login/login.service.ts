@@ -5,19 +5,19 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Login } from "./entities/login.entity";
 //引入redis的缓存
-// import {RedisCacheService} from '../cache/redis-cache.service'
 
+import {RedisCacheService}  from '../../cache/redis-cache/redis-cache.service'
 @Injectable()
 export class LoginService {
 
   constructor(@InjectRepository(Login)
               private loginRepository: Repository<Login>,  //这种简写可以将loginRepositoy 声明和初始化同时进行
-             // private readonly redisCacheService: RedisCacheService
+             private readonly redisCacheService: RedisCacheService
               ) {
   }
 
   create(createLoginDto: CreateLoginDto) {
-    // this.redisCacheService.cacheSet(createLoginDto.username, 'sfsdf',300000)
+   
     return this.loginRepository.save(createLoginDto);
   }
 

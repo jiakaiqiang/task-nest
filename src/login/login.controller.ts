@@ -8,7 +8,9 @@ import {ApiTags,ApiOperation}  from '@nestjs/swagger';
 @ApiTags('用户')
 @Controller('login')
 export class LoginController {
-  constructor(private readonly loginService: LoginService) {}
+  constructor(private readonly loginService: LoginService
+    
+    ) {}
   @ApiOperation({
     summary: '新增用户',
   })

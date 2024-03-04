@@ -11,9 +11,24 @@ import { middleware} from './middle/middle'
 import { ArtcileModule } from './artcile/artcile.module';
 import {CacheModule} from '@nestjs/cache-manager'
 import{redisStore} from 'cache-manager-redis-yet';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+ //jwt 模块
+import { JwtModule,JwtService } from '@nestjs/jwt'
 
 @Module({
   imports: [
+    JwtModule.registerAsync({
+      async useFactory() {
+        return {
+          secret: 'jkq', //密钥
+          signOptions: { 
+            expiresIn: '7d'  //过期时间
+          }
+        }
+      }
+    }),
+
     CacheModule.register({
       isGlobal: true,
       store: redisStore,
@@ -24,7 +39,7 @@ import{redisStore} from 'cache-manager-redis-yet';
        db: 0, //目标库,
       
 
-}),
+    }),
     TypeOrmModule.forRoot({
       type: "mysql",
       connectorPackage: "mysql2",
@@ -43,7 +58,11 @@ import{redisStore} from 'cache-manager-redis-yet';
 
     LoginModule,
     
-    ArtcileModule],
+    ArtcileModule,
+    
+    AuthModule,
+    
+    UsersModule],
   controllers: [AppController],
   providers: [AppService],
 })

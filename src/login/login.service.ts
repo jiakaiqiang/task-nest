@@ -3,6 +3,8 @@ import {
   HttpException,
   Injectable,
   HttpStatus,
+  Inject,
+  
 } from '@nestjs/common';
 import { CreateLoginDto } from './dto/create-login.dto';
 import { UpdateLoginDto } from './dto/update-login.dto';
@@ -13,21 +15,24 @@ import { Login } from './entities/login.entity';
 //生成jwt
 import { JwtService } from '@nestjs/jwt';
 
-//引入redis的缓存
+import { Cache } from 'cache-manager';
 
-import { RedisCacheService } from '../../cache/redis-cache/redis-cache.service';
+
 @Injectable()
 export class LoginService {
   constructor(
     @InjectRepository(Login)
     private loginRepository: Repository<Login>, //这种简写可以将loginRepositoy 声明和初始化同时进行
-    private readonly redisCacheService: RedisCacheService,
+    @Inject('CACHE_MANAGER')
+    private readonly redisCacheService: Cache,
     //jwt
     //private readonly jwtService: JwtService
   ) {}
 
   create(createLoginDto: CreateLoginDto) {
-    this.redisCacheService.cacheSet('FWFWE', 'WEWEW', 60 * 60 * 24 * 7);
+    //进行缓存
+  
+    this.redisCacheService.set(createLoginDto.username, createLoginDto.password, 60 * 60 * 24 * 7);
     //创建成功后然后返回jwt
 
     return this.loginRepository.save(createLoginDto);
@@ -41,12 +46,13 @@ export class LoginService {
   }
 
   findAll() {
+    console.log('wewe')
     return this.loginRepository.find();
   }
 
   async findOne(id: number) {
     let result = await this.loginRepository.findOneBy({ id });
-    console.log(result, 'result');
+   
     if (result) {
       return result;
     } else {

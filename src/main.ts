@@ -29,6 +29,6 @@ async function bootstrap() {
   SwaggerModule.setup("/docs", app, document);
   app.useGlobalInterceptors(new ResponseInterceptor());
   app.useGlobalFilters(new AllExceptionsFilter(),new HttpExceptionFilter());
-  await app.listen(3001);
+  await app.listen(3000);
 }
 bootstrap();

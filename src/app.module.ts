@@ -32,11 +32,8 @@ import { JwtModule,JwtService } from '@nestjs/jwt'
     CacheModule.register({
       isGlobal: true,
       store: redisStore,
-      socket:{
-        host: '127.0.0.1',
-        port: 6379,
-      },
-       db: 0, //目标库,
+      host: 'localhost',
+      port: 6379,
       
 
     }),

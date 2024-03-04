@@ -24,7 +24,7 @@ export class LoginController {
   })
   @Get()
   findAll() {
-    console.log(this.loginService.findAll(),'-wefwef')
+   
     return this.loginService.findAll();
   }
  

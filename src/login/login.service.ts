@@ -6,7 +6,7 @@ import { Repository } from "typeorm";
 import { Login } from "./entities/login.entity";
 //引入redis的缓存
 
-import {RedisCacheService}  from '../../cache/redis-cache/redis-cache.service'
+// import {RedisCacheService}  from '../../cache/redis-cache/redis-cache.service'
 @Injectable()
 export class LoginService {
 

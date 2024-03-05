@@ -17,17 +17,27 @@ import { JwtService } from '@nestjs/jwt';
 
 import { Cache } from 'cache-manager';
 
-
+import {BusinessException} from '../common/business.exception';
 @Injectable()
 export class LoginService {
   constructor(
-    @InjectRepository(Login)
-    private loginRepository: Repository<Login>, //这种简写可以将loginRepositoy 声明和初始化同时进行
-    @Inject('CACHE_MANAGER')
-    private readonly redisCacheService: Cache,
-    //jwt
-    //private readonly jwtService: JwtService
+     //jwt
+    
+    private jwtService: JwtService,
+    @InjectRepository(Login)  private loginRepository: Repository<Login>,
+    //这种简写可以将loginRepositoy 声明和初始化同时进行
+    @Inject('CACHE_MANAGER') private readonly redisCacheService: Cache,
+   
+   
   ) {}
+
+  getToken(){
+    let info =  {username:'jkq',password: 123}
+    const token  = this.jwtService.sign(info)
+    console.log(token,'toe')
+   
+   return '---'
+  }
 
   create(createLoginDto: CreateLoginDto) {
     //进行缓存
@@ -35,18 +45,27 @@ export class LoginService {
     this.redisCacheService.set(createLoginDto.username, createLoginDto.password, 60 * 60 * 24 * 7);
     //创建成功后然后返回jwt
 
-    return this.loginRepository.save(createLoginDto);
+    //return this.loginRepository.save(createLoginDto);
     //生成jwT
+    //this.loginRepository.save(createLoginDto)
+    console.log(this.jwtService,'=wef')
+    let info =  {username:'jkq',password: 123}
+    const token  = this.jwtService.sign(info)
+    console.log(token,'toe')
+   
+   return token
     // try{
     //   this.loginRepository.save(createLoginDto)
-    //  return  this.jwtService.sign({id: createLoginDto.id, username: createLoginDto.username,password: createLoginDto.password})
+    //   const token  = this.jwtService.sign({username:'jkq',password: 123})
+     
+    //  return token
     // }catch(e){
-    //   throw new Error('错误')
+    //   throw new BusinessException('你这个参数错了')
     // }
   }
 
   findAll() {
-    console.log('wewe')
+    
     return this.loginRepository.find();
   }
 

@@ -14,7 +14,7 @@ import{redisStore} from 'cache-manager-redis-yet';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
  //jwt 模块
-import { JwtModule,JwtService } from '@nestjs/jwt'
+import { JwtModule } from '@nestjs/jwt'
 
 @Module({
   imports: [
@@ -34,8 +34,6 @@ import { JwtModule,JwtService } from '@nestjs/jwt'
       store: redisStore,
       host: 'localhost',
       port: 6379,
-      
-
     }),
     TypeOrmModule.forRoot({
       type: "mysql",

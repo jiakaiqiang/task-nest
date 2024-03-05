@@ -38,7 +38,7 @@ export class LoginController {
   findBusinessError() {
     const a: any = {}
     try {
-      console.log(a.b.c)
+     
     } catch (error) {
       throw new BusinessException('你这个参数错了')
     }
@@ -65,5 +65,13 @@ export class LoginController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.loginService.remove(+id);
+  }
+ 
+  @ApiOperation({
+    summary: '获取tokne',
+  })
+ @Get('getToken')
+  getToken(){
+    return this.loginService.getToken();
   }
 }

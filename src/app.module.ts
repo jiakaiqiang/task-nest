@@ -15,7 +15,7 @@ import { AuthModule } from './auth/auth.module';
  //jwt 模块
 
 
-// import {RedisCacheModule} from './redis/redis-cache.module'
+//import { RedisCacheModule } from 'src/redis/redis-cache.module';
 @Module({
   imports: [
  

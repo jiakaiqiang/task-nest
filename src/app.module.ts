@@ -13,25 +13,12 @@ import { ArtcileModule } from './artcile/artcile.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
  //jwt 模块
-import { JwtModule } from '@nestjs/jwt'
-import {PassportModule} from '@nestjs/passport'
-import {RedisCacheModule} from './redis/redis-cache.module'
+
+
+// import {RedisCacheModule} from './redis/redis-cache.module'
 @Module({
   imports: [
-    JwtModule.registerAsync({
-      async useFactory() {
-        return {
-          secretOrPrivateKey: '1AGy4bCUoECDZ4yI6h8DxHDwgj84EqStMNyab8nPChQ=', //密钥
-          signOptions: { 
-            expiresIn: '7d'  //过期时间
-          }
-        }
-      }
-    }),
-    PassportModule.register({
-      defaultStrategy: 'jwt'
-    }),
-   
+ 
     TypeOrmModule.forRoot({
       type: "mysql",
       connectorPackage: "mysql2",

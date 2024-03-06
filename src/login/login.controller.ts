@@ -61,13 +61,7 @@ export class LoginController {
     return this.loginService.remove(+id);
   }
  
-  @ApiOperation({
-    summary: '获取tokne',
-  })
-  @Get('aa')
-  getToken(){
-    return this.loginService.getToken();
-  }
+ 
   @ApiOperation({
     summary: '查询单个人的信息',
   })

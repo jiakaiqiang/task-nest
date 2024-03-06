@@ -11,7 +11,7 @@ import { middleware} from './middle/middle'
 import { ArtcileModule } from './artcile/artcile.module';
 
 import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
+
  //jwt 模块
 
 
@@ -39,9 +39,9 @@ import { UsersModule } from './users/users.module';
   
     ArtcileModule,
     
-    AuthModule,
+    AuthModule, //注入jwt 授权模块
     
-    UsersModule],
+    ],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -2,7 +2,8 @@ import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JwtModule } from '@nestjs/jwt';
-import { UsersModule } from '../users/users.module';
+import { LoginModule } from '../login/login.module';
+import { RedisCacheModule } from 'src/redis/redis-cache.module';
 
 @Module({
   imports:[
@@ -16,7 +17,8 @@ import { UsersModule } from '../users/users.module';
         }
       }
     }),
-    UsersModule
+    LoginModule,
+    RedisCacheModule
    
   ],
   controllers: [AuthController],

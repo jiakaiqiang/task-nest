@@ -32,7 +32,7 @@ export class LoginService {
     //进行缓存
     this.redisCacheService.cacheSet(createLoginDto.username, createLoginDto.password, 60 * 60 * 24 * 7);
     //创建成功后然后返回jwt
-
+     
     return this.loginRepository.save(createLoginDto);
    
   }

@@ -15,7 +15,7 @@ import { Login } from './entities/login.entity';
 //生成jwt
 import { JwtService } from '@nestjs/jwt';
 
-import { Cache } from 'cache-manager';
+import {RedisCacheService} from '../redis/redis-cache.service';
 
 import {BusinessException} from '../common/business.exception';
 @Injectable()
@@ -23,37 +23,39 @@ export class LoginService {
   constructor(
      //jwt
     
-    private jwtService: JwtService,
-    @InjectRepository(Login)  private loginRepository: Repository<Login>,
-    //这种简写可以将loginRepositoy 声明和初始化同时进行
-    @Inject('CACHE_MANAGER') private readonly redisCacheService: Cache,
+  
+    private readonly redisCacheService: RedisCacheService,
+    @InjectRepository(Login)  private loginRepository: Repository<Login>,   //这种简写可以将loginRepositoy 声明和初始化同时进行
+  
+    // private jwtService: JwtService,
    
    
   ) {}
 
-  getToken(){
-    let info =  {username:'jkq',password: 123}
-    const token  = this.jwtService.sign(info)
-    console.log(token,'toe')
+  async getToken(){
+    const info =  {username:'jkq',password: 123}
    
-   return '---'
+   
+   return {
+    // access_token: await this.jwtService.signAsync(info)
+   }
   }
 
   create(createLoginDto: CreateLoginDto) {
     //进行缓存
   
-    this.redisCacheService.set(createLoginDto.username, createLoginDto.password, 60 * 60 * 24 * 7);
+    this.redisCacheService.cacheSet(createLoginDto.username, createLoginDto.password, 60 * 60 * 24 * 7);
     //创建成功后然后返回jwt
 
     //return this.loginRepository.save(createLoginDto);
     //生成jwT
     //this.loginRepository.save(createLoginDto)
-    console.log(this.jwtService,'=wef')
-    let info =  {username:'jkq',password: 123}
-    const token  = this.jwtService.sign(info)
-    console.log(token,'toe')
+  //   console.log(this.jwtService,'=wef')
+  //   let info =  {username:'jkq',password: 123}
+  //   const token  = this.jwtService.sign(info)
+  //   console.log(token,'toe')
    
-   return token
+  //  return token
     // try{
     //   this.loginRepository.save(createLoginDto)
     //   const token  = this.jwtService.sign({username:'jkq',password: 123})

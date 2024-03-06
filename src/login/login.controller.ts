@@ -45,13 +45,7 @@ export class LoginController {
     return this.loginService.findAll();
   }
   //创建接口的说明
-  @ApiOperation({
-    summary: '查询单个人的信息',
-  })
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.loginService.findOne(+id);
-  }
+ 
   @ApiOperation({
     summary: '更新单个人信息',
   })
@@ -70,8 +64,15 @@ export class LoginController {
   @ApiOperation({
     summary: '获取tokne',
   })
- @Get('getToken')
+  @Get('aa')
   getToken(){
     return this.loginService.getToken();
+  }
+  @ApiOperation({
+    summary: '查询单个人的信息',
+  })
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.loginService.findOne(+id);
   }
 }

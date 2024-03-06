@@ -9,32 +9,29 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 ///中间见进行依赖注入
 import { middleware} from './middle/middle'
 import { ArtcileModule } from './artcile/artcile.module';
-import {CacheModule} from '@nestjs/cache-manager'
-import{redisStore} from 'cache-manager-redis-yet';
+
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
  //jwt 模块
 import { JwtModule } from '@nestjs/jwt'
-
+import {PassportModule} from '@nestjs/passport'
+import {RedisCacheModule} from './redis/redis-cache.module'
 @Module({
   imports: [
     JwtModule.registerAsync({
       async useFactory() {
         return {
-          secret: 'jkq', //密钥
+          secretOrPrivateKey: '1AGy4bCUoECDZ4yI6h8DxHDwgj84EqStMNyab8nPChQ=', //密钥
           signOptions: { 
             expiresIn: '7d'  //过期时间
           }
         }
       }
     }),
-
-    CacheModule.register({
-      isGlobal: true,
-      store: redisStore,
-      host: 'localhost',
-      port: 6379,
+    PassportModule.register({
+      defaultStrategy: 'jwt'
     }),
+   
     TypeOrmModule.forRoot({
       type: "mysql",
       connectorPackage: "mysql2",
@@ -52,7 +49,7 @@ import { JwtModule } from '@nestjs/jwt'
     }),
 
     LoginModule,
-    
+  
     ArtcileModule,
     
     AuthModule,

@@ -4,9 +4,10 @@ import { LoginController } from './login.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {Login} from './entities/login.entity';
 import {JwtService} from '@nestjs/jwt';
+import {RedisCacheModule } from '../redis/redis-cache.module';
 @Module({
   controllers: [LoginController],
-  providers: [LoginService,JwtService],
-  imports: [TypeOrmModule.forFeature([Login])],
+  providers: [LoginService],
+  imports: [TypeOrmModule.forFeature([Login]),RedisCacheModule],
 })
 export class LoginModule {}

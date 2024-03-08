@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { LoginService } from './login.service';
-import { LoginController } from './login.controller';
+import { LoginService } from './user.service';
+import { LoginController } from './user.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import {Login} from './entities/login.entity';
+import {User} from './entities/user.entity';
 import {JwtService} from '@nestjs/jwt';
 import {RedisCacheModule } from '../redis/redis-cache.module';
 @Module({
   controllers: [LoginController],
   providers: [LoginService],
-  imports: [TypeOrmModule.forFeature([Login]),RedisCacheModule],
+  imports: [TypeOrmModule.forFeature([User]),RedisCacheModule],
 })
 export class LoginModule {}

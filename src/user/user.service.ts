@@ -6,11 +6,11 @@ import {
   Inject,
   
 } from '@nestjs/common';
-import { CreateLoginDto } from './dto/create-login.dto';
-import { UpdateLoginDto } from './dto/update-login.dto';
+import { CreateLoginDto } from './dto/create-user.dto';
+import { UpdateLoginDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Login } from './entities/login.entity';
+import { User } from './entities/user.entity';
 
 
 
@@ -24,7 +24,7 @@ export class LoginService {
     
   
     private readonly redisCacheService: RedisCacheService,
-    @InjectRepository(Login)  private loginRepository: Repository<Login>,   //这种简写可以将loginRepositoy 声明和初始化同时进行
+    @InjectRepository(User)  private userRepository: Repository<User>,   //这种简写可以将userRepositoy 声明和初始化同时进行
    
   ) {}
 
@@ -33,16 +33,16 @@ export class LoginService {
     this.redisCacheService.cacheSet(createLoginDto.username, createLoginDto.password, 60 * 60 * 24 * 7);
     //创建成功后然后返回jwt
      
-    return this.loginRepository.save(createLoginDto);
+    return this.userRepository.save(createLoginDto);
    
   }
   findAll() {
     
-    return this.loginRepository.find();
+    return this.userRepository.find();
   }
 
   async findOne(id: number) {
-    let result = await this.loginRepository.findOneBy({ id });
+    let result = await this.userRepository.findOneBy({ id });
    
     if (result) {
       return result;
@@ -61,10 +61,10 @@ export class LoginService {
   }
 
   update(id: number, updateLoginDto: UpdateLoginDto) {
-    return this.loginRepository.update(id, updateLoginDto);
+    return this.userRepository.update(id, updateLoginDto);
   }
 
   remove(id: number) {
-    return this.loginRepository.delete(id);
+    return this.userRepository.delete(id);
   }
 }

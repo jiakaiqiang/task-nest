@@ -1,4 +1,4 @@
- Post http://localhost:3000/api/login 
+ Post http://localhost:3000/api/user 
  Content-Type: application/json
 
  {
@@ -8,10 +8,10 @@
  }
 
 ###
-GET http://localhost:3000/api/login
+GET http://localhost:3000/api/user
 
 ###
-Patch  http://localhost:3000/api/login/1212
+Patch  http://localhost:3000/api/user/1212
 Content-Type: application/json
 {
     

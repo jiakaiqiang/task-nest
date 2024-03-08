@@ -1,5 +1,8 @@
-import { Controller,Post } from '@nestjs/common';
+import { Controller,Post,UseGuards ,Request,Get} from '@nestjs/common';
 import { AuthService } from './auth.service';
+//引入令牌
+import {Public} from 'src/utils/custom'
+
 
 @Controller('auth')
 export class AuthController {
@@ -9,6 +12,12 @@ export class AuthController {
 
     @Post()
     getToken(){
-        return this.authService.login({username:"jkq",userId:'xdsdsd'})
+        return this.authService.user({username:"jkq",userId:'xdsdsd'})
+     }
+
+   
+     @Get('profile')
+     getProfile(@Request() req) {
+       return req.user;
      }
 }

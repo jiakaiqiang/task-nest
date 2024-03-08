@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 @Entity("user") //代表查询那个表
-export class Login {
+export class User {
     @PrimaryGeneratedColumn()
     id: number;
     @Column({ length: 30 })

@@ -1,14 +1,14 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { LoginService } from './login.service';
-import { CreateLoginDto } from './dto/create-login.dto';
-import { UpdateLoginDto } from './dto/update-login.dto';
+import { LoginService } from './user.service';
+import { CreateLoginDto } from './dto/create-user.dto';
+import { UpdateLoginDto } from './dto/update-user.dto';
 import { BusinessException } from 'src/common/business.exception';
 import {ApiTags,ApiOperation}  from '@nestjs/swagger';
 //接口分类
 @ApiTags('用户')
-@Controller('login')
+@Controller('user')
 export class LoginController {
-  constructor(private readonly loginService: LoginService
+  constructor(private readonly userService: LoginService
     
     ) {}
   @ApiOperation({
@@ -17,7 +17,7 @@ export class LoginController {
   @Post()
   create(@Body() createLoginDto: CreateLoginDto) {
 
-    return this.loginService.create(createLoginDto);
+    return this.userService.create(createLoginDto);
   }
   @ApiOperation({
     summary: '查询所有',
@@ -25,7 +25,7 @@ export class LoginController {
   @Get()
   findAll() {
    
-    return this.loginService.findAll();
+    return this.userService.findAll();
   }
  
 
@@ -42,7 +42,7 @@ export class LoginController {
     } catch (error) {
       throw new BusinessException('你这个参数错了')
     }
-    return this.loginService.findAll();
+    return this.userService.findAll();
   }
   //创建接口的说明
  
@@ -51,14 +51,14 @@ export class LoginController {
   })
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateLoginDto: UpdateLoginDto) {
-    return this.loginService.update(+id, updateLoginDto);
+    return this.userService.update(+id, updateLoginDto);
   }
   @ApiOperation({
     summary: '删除单个人',
   })
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.loginService.remove(+id);
+    return this.userService.remove(+id);
   }
  
  
@@ -67,6 +67,6 @@ export class LoginController {
   })
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.loginService.findOne(+id);
+    return this.userService.findOne(+id);
   }
 }

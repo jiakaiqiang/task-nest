@@ -29,6 +29,7 @@ async function bootstrap() {
   SwaggerModule.setup("/docs", app, document);
   app.useGlobalInterceptors(new ResponseInterceptor());
   app.useGlobalFilters(new AllExceptionsFilter(),new HttpExceptionFilter());
+  app.enableCors() //跨域
   await app.listen(3000);
 }
 bootstrap();

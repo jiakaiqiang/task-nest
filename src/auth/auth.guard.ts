@@ -8,6 +8,7 @@ import {
   } from '@nestjs/common';
   import { Reflector } from '@nestjs/core';
   import { JwtService } from '@nestjs/jwt';
+import { NoValidUrlList } from 'config';
 
   import { Request } from 'express';
   import {IS_PUBLIC_KEY} from 'src/utils/custom'
@@ -34,7 +35,16 @@ import {
 
 
       const request = context.switchToHttp().getRequest();
+      //获取urL
+      const url =  request.url
+    
       const token = this.extractTokenFromHeader(request);
+      console.log(token,'-')
+      //不需要鉴权的接口
+      if(NoValidUrlList.includes(url)){
+      return true
+      }
+
       if (!token) {
         throw new UnauthorizedException();
       }
@@ -45,10 +55,12 @@ import {
             secret: '1AGy4bCUoECDZ4yI6h8DxHDwgj84EqStMNyab8nPChQ='
           }
         );
+        console.log(payload,'-jkq')
         // 💡 We're assigning the payload to the request object here
         // so that we can access it in our route handlers
         request['user'] = payload;
       } catch {
+        console.log('-wewe')
         throw new UnauthorizedException();
       }
       return true;

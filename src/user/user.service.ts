@@ -11,6 +11,7 @@ import { UpdateLoginDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
+import {encrypt} from '../utils/index'
 
 
 
@@ -29,8 +30,14 @@ export class LoginService {
   ) {}
 
   create(createLoginDto: CreateLoginDto) {
+    //存储加密后的密码
+    const  password:any = encrypt(createLoginDto.password);
     //进行缓存
-    this.redisCacheService.cacheSet(createLoginDto.username, createLoginDto.password, 60 * 60 * 24 * 7);
+    this.redisCacheService.cacheSet(
+      createLoginDto.username,
+      password,
+      60 * 60 * 24 * 7
+    );
     //创建成功后然后返回jwt
      
     return this.userRepository.save(createLoginDto);

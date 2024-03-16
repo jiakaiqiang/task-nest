@@ -9,13 +9,11 @@ export class AuthController {
     constructor(
         private    authService:AuthService
     ){}
-
+    //登录接口
     @Post()
     getToken(){
         return this.authService.user({username:"jkq",userId:'xdsdsd'})
      }
-
-   
      @Get('profile')
      getProfile(@Request() req) {
        return req.user;

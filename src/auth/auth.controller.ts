@@ -1,4 +1,4 @@
-import { Controller,Post,UseGuards ,Request,Get} from '@nestjs/common';
+import { Controller,Post,UseGuards ,Request,Get,Body} from '@nestjs/common';
 import { AuthService } from './auth.service';
 //引入令牌
 import {Public} from 'src/utils/custom'
@@ -11,8 +11,9 @@ export class AuthController {
     ){}
     //登录接口
     @Post()
-    getToken(){
-        return this.authService.user({username:"jkq",userId:'xdsdsd'})
+    getToken(@Body() loginDto:any){
+      
+        return this.authService.user(loginDto)
      }
      @Get('profile')
      getProfile(@Request() req) {

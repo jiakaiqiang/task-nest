@@ -24,7 +24,7 @@ export class LoginController {
   })
   @Get()
   findAll() {
-   
+     
     return this.userService.findAll();
   }
  

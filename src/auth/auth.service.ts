@@ -20,11 +20,12 @@ export class AuthService {
     }
 
     async user(user: any) {
-        const payload = { username: user.username, sub: user.userId };
-        this.redisCacheService.cacheSet('jkq',this.jwtService.sign(payload),10000)
-        return {
-          access_token: this.jwtService.sign(payload)
-        }
+        // const payload = { username: user.username,password:user.password, sub: user.userId };
+        // this.redisCacheService.cacheSet('jkq',this.jwtService.sign(payload),10000)
+        // return {
+        //   access_token: this.jwtService.sign(payload)
+        // }
+        return  'listee'
       }
 }
 

@@ -16,7 +16,7 @@ async function bootstrap() {
   }
   const appOptions = { cors: true };
   const app = await NestFactory.create(AppModule, appOptions);
-  app.setGlobalPrefix("api");
+  
 
   const options = new DocumentBuilder()
     .setTitle("NestJS Realworld Example App")
@@ -30,6 +30,7 @@ async function bootstrap() {
   app.useGlobalInterceptors(new ResponseInterceptor());
   app.useGlobalFilters(new AllExceptionsFilter(),new HttpExceptionFilter());
   app.enableCors() //跨域
+  app.setGlobalPrefix('api', { exclude: ['*'] });
   await app.listen(3000);
 }
 bootstrap();

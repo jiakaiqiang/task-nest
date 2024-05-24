@@ -15,7 +15,7 @@ import { NoValidUrlList } from 'config';
   @Injectable()
   export class AuthGuard implements CanActivate {
     constructor(private jwtService: JwtService,private reflector: Reflector) {
-   
+      
     }
   
     async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -41,7 +41,8 @@ import { NoValidUrlList } from 'config';
       const token = this.extractTokenFromHeader(request);
       console.log(token,'-')
       //不需要鉴权的接口
-      if(NoValidUrlList.includes(url)){
+      console.log(NoValidUrlList,url,NoValidUrlList.includes(`${url}`))
+      if(NoValidUrlList.includes(`${url}`)){
       return true
       }
 
@@ -57,10 +58,10 @@ import { NoValidUrlList } from 'config';
         );
         console.log(payload,'-jkq')
         // 💡 We're assigning the payload to the request object here
-        // so that we can access it in our route handlers
+        // so that we can access it in our route handlers  
         request['user'] = payload;
       } catch {
-        console.log('-wewe')
+        
         throw new UnauthorizedException();
       }
       return true;

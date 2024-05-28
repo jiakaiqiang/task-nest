@@ -65,8 +65,8 @@ export class LoginController {
   @ApiOperation({
     summary: '查询单个人的信息',
   })
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+  @Get(':username')
+  findOne(@Param('username') username: string) {
+    return this.userService.findOne(username);
   }
 }

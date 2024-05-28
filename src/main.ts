@@ -30,7 +30,7 @@ async function bootstrap() {
   app.useGlobalInterceptors(new ResponseInterceptor());
   app.useGlobalFilters(new AllExceptionsFilter(),new HttpExceptionFilter());
   app.enableCors() //跨域
-  app.setGlobalPrefix('api', { exclude: ['*'] });
+  // app.setGlobalPrefix('api', { exclude: ['*'] });
   await app.listen(3000);
 }
 bootstrap();

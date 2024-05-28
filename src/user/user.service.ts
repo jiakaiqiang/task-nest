@@ -48,8 +48,8 @@ export class LoginService {
     return this.userRepository.find();
   }
 
-  async findOne(id: number) {
-    let result = await this.userRepository.findOneBy({ id });
+  async findOne(username: string) {
+    let result = await this.userRepository.findOneBy({ username });
    
     if (result) {
       return result;

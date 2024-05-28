@@ -9,5 +9,8 @@ import {RedisCacheModule } from '../redis/redis-cache.module';
   controllers: [LoginController],
   providers: [LoginService],
   imports: [TypeOrmModule.forFeature([User]),RedisCacheModule],
+  
+  exports: [LoginService],
+
 })
 export class LoginModule {}

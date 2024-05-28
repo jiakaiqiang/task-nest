@@ -43,6 +43,7 @@
     "reflect-metadata": "^0.1.13",
     "run-script-webpack-plugin": "^0.2.0",
     "rxjs": "^7.8.1",
+    "svg-captcha": "^1.4.0",
     "swagger-ui-express": "^5.0.0",
     "typeorm": "^0.3.20",
     "webpack": "^5.90.3",

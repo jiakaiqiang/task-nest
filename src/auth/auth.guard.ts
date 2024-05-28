@@ -39,9 +39,9 @@ import { NoValidUrlList } from 'config';
       const url =  request.url
     
       const token = this.extractTokenFromHeader(request);
-      console.log(token,'-')
+    
       //不需要鉴权的接口
-      console.log(NoValidUrlList,url,NoValidUrlList.includes(`${url}`))
+     
       if(NoValidUrlList.includes(`${url}`)){
       return true
       }

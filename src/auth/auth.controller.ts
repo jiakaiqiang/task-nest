@@ -1,4 +1,4 @@
-import { Controller,Post,UseGuards ,Request,Get,Body} from '@nestjs/common';
+import { Controller,Post,UseGuards ,Request,Get,Body,Headers} from '@nestjs/common';
 import { AuthService } from './auth.service';
 //引入令牌
 import {Public} from 'src/utils/custom'
@@ -11,12 +11,13 @@ export class AuthController {
     ){}
     //登录接口
     @Post()
-    getToken(@Body() loginDto:any){
-      
-        return this.authService.user(loginDto)
+    getToken(@Body() loginDto,@Headers() Headers){
+   
+      return this.authService.validateUser(loginDto.username,loginDto.password)
+       
      }
-     @Get('profile')
-     getProfile(@Request() req) {
-       return req.user;
+     @Get('captchaImage')
+     getProfile() {
+       return this.authService.getCaptcha();
      }
 }

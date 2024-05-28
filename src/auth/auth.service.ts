@@ -1,4 +1,4 @@
-import { Injectable ,HttpException, HttpStatus,NotFoundException } from '@nestjs/common';
+import { Injectable ,HttpException, HttpStatus,NotFoundException,Session } from '@nestjs/common';
 import { LoginService } from 'src/user/user.service';
 import {JwtService } from '@nestjs/jwt';
 import {RedisCacheService} from 'src/redis/redis-cache.service';
@@ -14,6 +14,7 @@ export class AuthService {
 
     /* 检查用户是否已存在 + 校验密码 */
     async validateUser(username: string, pwd: string) {
+     
       const payload = { username: username,password:pwd};
         const user = await this.LoginService.findOne(username); // 获取用户
 
@@ -25,16 +26,18 @@ export class AuthService {
               ...result
             }; // 返回用户信息
         }
-        throw new NotFoundException('用户不存在或者密码错误', '404'); //第二个参数是状态码
+        throw new HttpException('用户不存在或者密码错误', 404); //第二个参数是状态码
     }
     getCaptcha(){
+     
       const captcha = svgCaptcha.create({
         size: 4, //验证码长度
         fontSize: 50,
         width: 110,
-        height: 38,
+        height: 50,
         background: '#cc9966', //背景颜色
       })
+      //session.code = captcha.text //存储生成的code
         return { img: captcha.data };
     }
 

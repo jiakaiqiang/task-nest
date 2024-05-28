@@ -1,1 +1,1 @@
-export const  NoValidUrlList  = ['/auth']
+export const  NoValidUrlList  = ['/auth','/auth/captchaImage']

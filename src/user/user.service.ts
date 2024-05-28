@@ -54,16 +54,7 @@ export class LoginService {
     if (result) {
       return result;
     } else {
-      throw new HttpException(
-        {
-          status: HttpStatus.FORBIDDEN,
-          error: 'This is a custom message',
-        },
-        HttpStatus.FORBIDDEN,
-        {
-          cause: new Error(),
-        },
-      );
+      throw new HttpException('用户不存在',404);
     }
   }
 

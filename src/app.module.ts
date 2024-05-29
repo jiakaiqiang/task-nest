@@ -16,11 +16,13 @@ import { AuthGuard } from 'src/auth/auth.guard';
 //jwt 模块
 
 //import { RedisCacheModule } from 'src/redis/redis-cache.module';
+import { MenuModule } from './menu/menu.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
       connectorPackage: 'mysql2',
+      cache: false,
       //autoLoadEntities: true, //自动加载实体
       retryAttempts: 8, //尝试连接数据库的次数
       retryDelay: 2000, //重试连接的次数
@@ -37,7 +39,9 @@ import { AuthGuard } from 'src/auth/auth.guard';
 
     ArtcileModule,
 
-    AuthModule, //注入jwt 授权模块
+    AuthModule,
+
+    MenuModule, //注入jwt 授权模块
   ],
   //注册全局的jwt 守卫
   controllers: [AppController],

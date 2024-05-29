@@ -11,7 +11,7 @@ import { User } from 'src/user/entities/user.entity';
 // 验证请求头中的token
 export  class JwtAuthStrategy extends PassportStrategy(Strategy, "jwt") {
     constructor() {
-        console.log('wfwfw')
+        
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration: false,

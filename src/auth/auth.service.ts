@@ -13,8 +13,12 @@ export class AuthService {
         private readonly redisCacheService: RedisCacheService) {}
 
     /* 检查用户是否已存在 + 校验密码 */
-    async validateUser(username: string, pwd: string) {
-     
+    async validateUser(username: string, pwd: string,code:string) {
+      let  cacheCode = await this.redisCacheService.cacheGet('code')
+      if(cacheCode.toLocaleLowerCase() !==code.toLocaleLowerCase() ){
+        throw new HttpException('验证码错误', 404); //第二个参数是状态码
+        
+      }
       const payload = { username: username,password:pwd};
         const user = await this.LoginService.findOne(username); // 获取用户
 
@@ -39,7 +43,13 @@ export class AuthService {
         height: 50,
         background: '#cc9966', //背景颜色
       })
-      //session.code = captcha.text //存储生成的code
+
+      this.redisCacheService.cacheSet(
+        'code',
+        captcha.text,
+        60 * 60 * 24 * 7
+      );
+      //session.code =  //存储生成的code
         return { img: captcha.data };
     }
 

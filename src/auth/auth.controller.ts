@@ -14,7 +14,7 @@ export class AuthController {
     getToken(@Body() loginDto,@Headers() Headers,@Session() session){
       console.log(session)
       if(loginDto.code){
-        return this.authService.validateUser(loginDto.username,loginDto.password)
+        return this.authService.validateUser(loginDto.username,loginDto.password,loginDto.code)
       }
       else{
         throw new HttpException('验证码错误',404)
@@ -25,7 +25,7 @@ export class AuthController {
      }
      @Get('captchaImage')
      getProfile(@Session() session){
-      console.log(session,'-wewe')
+      
        return this.authService.getCaptcha();
      }
 }

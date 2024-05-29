@@ -13,6 +13,6 @@ export class RedisCacheService {
   }
 
   async cacheGet(key: string): Promise<any> {
-    return this.cacheManager.get(key);
+    return  await this.cacheManager.get(key);
   }
 }

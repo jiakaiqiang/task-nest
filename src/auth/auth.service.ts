@@ -25,8 +25,10 @@ export class AuthService {
               access_token: this.jwtService.sign(payload),
               ...result
             }; // 返回用户信息
+        }else{
+          throw new HttpException('密码错误', 404); //第二个参数是状态码
         }
-        throw new HttpException('用户不存在或者密码错误', 404); //第二个参数是状态码
+        
     }
     getCaptcha(){
      

@@ -1,4 +1,4 @@
-import { Controller,Post,UseGuards ,Request,Get,Body,Headers, Session} from '@nestjs/common';
+import { Controller,Post,UseGuards ,Request,Get,Body,Headers, Session, HttpException} from '@nestjs/common';
 import { AuthService } from './auth.service';
 //引入令牌
 import {Public} from 'src/utils/custom'
@@ -12,11 +12,12 @@ export class AuthController {
     //登录接口
     @Post()
     getToken(@Body() loginDto,@Headers() Headers,@Session() session){
-      if(session.code==loginDto.code){
+      console.log(session)
+      if(loginDto.code){
         return this.authService.validateUser(loginDto.username,loginDto.password)
       }
       else{
-        throw new Error('验证码错误')
+        throw new HttpException('验证码错误',404)
       }
    
      

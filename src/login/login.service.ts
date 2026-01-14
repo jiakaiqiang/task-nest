@@ -14,7 +14,7 @@ import { Login } from './entities/login.entity';
 
 
 
-import {RedisCacheService} from '../redis/redis-cache.service';
+// import {RedisCacheService} from '../redis/redis-cache.service';
 
 // import {BusinessException} from '../common/business.exception';
 @Injectable()
@@ -23,17 +23,17 @@ export class LoginService {
  
     
   
-    private readonly redisCacheService: RedisCacheService,
+    //private readonly redisCacheService: RedisCacheService,
     @InjectRepository(Login)  private loginRepository: Repository<Login>,   //这种简写可以将loginRepositoy 声明和初始化同时进行
    
   ) {}
 
   create(createLoginDto: CreateLoginDto) {
     //进行缓存
-    this.redisCacheService.cacheSet(createLoginDto.username, createLoginDto.password, 60 * 60 * 24 * 7);
+    //this.redisCacheService.cacheSet(createLoginDto.username, createLoginDto.password, 60 * 60 * 24 * 7);
     //创建成功后然后返回jwt
      
-    return this.loginRepository.save(createLoginDto);
+    //return this.loginRepository.save(createLoginDto);
    
   }
   findAll() {

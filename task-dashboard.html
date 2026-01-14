@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>任务管理</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f5f5f5;
+            min-height: 100vh;
+            padding-bottom: 20px;
+        }
+
+        .container {
+            max-width: 414px;
+            margin: 0 auto;
+            background-color: #f5f5f5;
+        }
+
+        /* 顶部头部区域 */
+        .header {
+            background: linear-gradient(135deg, #6AB7FF 0%, #FFD89B 100%);
+            padding: 20px 16px 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+            z-index: 1;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .greeting {
+            color: #333;
+        }
+
+        .greeting-text {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .task-count {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .weather-info {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 8px 12px;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .weather-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .temperature {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 2px;
+        }
+
+        .weather-text {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 2px;
+        }
+
+        .date-text {
+            font-size: 11px;
+            color: #999;
+        }
+
+        /* 任务统计卡片 */
+        .stats-card {
+            background: white;
+            border-radius: 12px;
+            margin: -12px 16px 16px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            position: relative;
+            z-index: 2;
+        }
+
+        .stats-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 16px;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .stat-number.blue {
+            color: #4A90E2;
+        }
+
+        .stat-number.green {
+            color: #52C41A;
+        }
+
+        .stat-number.red {
+            color: #FF4D4F;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* 功能按钮区域 */
+        .actions-section {
+            padding: 0 16px;
+            margin-bottom: 16px;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .action-btn {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .action-btn:active {
+            transform: scale(0.98);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .action-icon.green {
+            background: linear-gradient(135deg, #52C41A 0%, #73D13D 100%);
+        }
+
+        .action-icon.blue {
+            background: linear-gradient(135deg, #4A90E2 0%, #69B7FF 100%);
+        }
+
+        .action-icon.purple {
+            background: linear-gradient(135deg, #9254DE 0%, #B37FEB 100%);
+        }
+
+        .action-label {
+            font-size: 14px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        /* 待办任务区域 */
+        .tasks-section {
+            padding: 0 16px;
+        }
+
+        .tasks-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .tasks-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .tasks-count {
+            font-size: 14px;
+            color: #999;
+        }
+
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .task-item {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .task-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .task-icon.blue {
+            background: linear-gradient(135deg, #4A90E2 0%, #69B7FF 100%);
+        }
+
+        .task-icon.red {
+            background: linear-gradient(135deg, #FF4D4F 0%, #FF7875 100%);
+        }
+
+        .task-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .task-title {
+            font-size: 15px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 6px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .task-date {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 4px;
+        }
+
+        .task-department {
+            font-size: 12px;
+            color: #666;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .task-badge {
+            background: #FF4D4F;
+            color: white;
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 375px) {
+            .container {
+                max-width: 100%;
+            }
+
+            .stats-row {
+                gap: 8px;
+            }
+
+            .stat-number {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部头部 -->
+        <div class="header">
+            <div class="header-content">
+                <div class="user-info">
+                    <div class="avatar">A</div>
+                    <div class="greeting">
+                        <div class="greeting-text">下午好, Andy</div>
+                        <div class="task-count">您还有4项待办任务</div>
+                    </div>
+                </div>
+                <div class="weather-info">
+                    <div class="weather-icon">☀️</div>
+                    <div class="temperature">24°C</div>
+                    <div class="weather-text">晴天</div>
+                    <div class="date-text">11月26日 周三</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 任务统计卡片 -->
+        <div class="stats-card">
+            <div class="stats-title">任务统计概况</div>
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-number blue">6</div>
+                    <div class="stat-label">总任务数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number green">2</div>
+                    <div class="stat-label">已完成</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number red">2</div>
+                    <div class="stat-label">延期</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 功能按钮区域 -->
+        <div class="actions-section">
+            <div class="actions-grid">
+                <button class="action-btn">
+                    <div class="action-icon green">+</div>
+                    <div class="action-label">新增任务</div>
+                </button>
+                <button class="action-btn">
+                    <div class="action-icon blue">📄</div>
+                    <div class="action-label">历史创建任务</div>
+                </button>
+                <button class="action-btn">
+                    <div class="action-icon blue">👤+</div>
+                    <div class="action-label">参与任务</div>
+                </button>
+                <button class="action-btn">
+                    <div class="action-icon purple">🔄</div>
+                    <div class="action-label">历史参与任务</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- 待办任务列表 -->
+        <div class="tasks-section">
+            <div class="tasks-header">
+                <div class="tasks-title">待办任务</div>
+                <div class="tasks-count">4项</div>
+            </div>
+            <div class="task-list">
+                <!-- 任务1 -->
+                <div class="task-item">
+                    <div class="task-icon red">🕐</div>
+                    <div class="task-content">
+                        <div class="task-title">海力士运维投标书</div>
+                        <div class="task-date">2025-11-12</div>
+                        <div class="task-department">上海总部-软件部-张文江</div>
+                    </div>
+                    <div class="task-badge">延期</div>
+                </div>
+
+                <!-- 任务2 -->
+                <div class="task-item">
+                    <div class="task-icon blue">🕐</div>
+                    <div class="task-content">
+                        <div class="task-title">智能制造系统开发项目</div>
+                        <div class="task-date">2025-11-15</div>
+                        <div class="task-department">上海总部-软件部-李经理</div>
+                    </div>
+                </div>
+
+                <!-- 任务3 -->
+                <div class="task-item">
+                    <div class="task-icon blue">🕐</div>
+                    <div class="task-content">
+                        <div class="task-title">客户管理系统需求分析</div>
+                        <div class="task-date">2025-11-10</div>
+                        <div class="task-department">上海总部-软件部-李经理</div>
+                    </div>
+                </div>
+
+                <!-- 任务4 -->
+                <div class="task-item">
+                    <div class="task-icon red">🕐</div>
+                    <div class="task-content">
+                        <div class="task-title">数据安全审计报告</div>
+                        <div class="task-date">2025-10-05</div>
+                        <div class="task-department">上海总部-软件部-李经理</div>
+                    </div>
+                    <div class="task-badge">延期</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

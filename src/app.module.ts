@@ -25,11 +25,11 @@ import { AuthModule } from './auth/auth.module';
       //autoLoadEntities: true, //自动加载实体
       retryAttempts:8,//尝试连接数据库的次数
       retryDelay:2000,//重试连接的次数
-      host: "127.0.0.1",
+      host: "http://10.173.29.93",
       port: 3306, // 端口号
       username: "root", // 用户名
       password: "123456", // 密码
-      database: "test", //数据库名
+      database: "jkq_system_back", //数据库名
       synchronize: true, //是否自动同步实体文件,生产环境建议关闭
       entities: ['dist/**/*.entity{.ts,.js}'],
 
